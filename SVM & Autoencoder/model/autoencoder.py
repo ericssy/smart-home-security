@@ -34,10 +34,10 @@ def train():
 
     pred = model.predict(X_test)
     mse = []
-    for i in len(pred)
+    for i in len(pred):
         mse.append(np.sum(np.square(np.subtract(pred[i], X_test[i])))
+    
     threshold = np.percentile(mse, 95)
-
     return Autoencoder(model, threshold)
 
 

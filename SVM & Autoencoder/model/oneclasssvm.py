@@ -168,15 +168,15 @@ if __name__ == '__main__':
     X_train = get_feature()
 
     #print X_train.shape
-    print 'Start training.'
+    print('Start training.')
     clf = svm.OneClassSVM(nu=0.1, kernel="rbf", gamma=0.1)
     clf.fit(X_train)
 
-    print 'Start predicting.'
+    print('Start predicting.')
     y_pred_train = clf.predict(X_train)
     y_true = [1] * X_train.shape[0]
 
-    print 'accuracy: ' + str(accuracy_score(y_true, y_pred_train))
+    print('accuracy: ' + str(accuracy_score(y_true, y_pred_train)))
 
-    print 'Save model.'
+    print('Save model.')
     pickle.dump(clf, open('model.p', 'wb'))
