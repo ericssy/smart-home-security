@@ -21,14 +21,11 @@ from sklearn import datasets
 from keras.layers import Activation, Dense
 from sklearn.preprocessing import MinMaxScaler
 
-def read_data():
+
+
+
+def pre_processing2():
     data = pd.read_csv("normal_data.csv")
-    return data
-    
-
-
-
-def pre_processing(data):
      #Sort the data by time
      # first by DayOfWeek, then by Time
     data_sorted = data.sort_values(by=['DayOfWeek', 'Time'])
@@ -54,7 +51,9 @@ def pre_processing(data):
     
 
 # transform the features 
-def pre_processing2(data):
+def pre_processing(filename, normal):
+    data = pd.read_csv(filename)
+    
     data_sorted = data.sort_values(by=['DayOfWeek', 'Time'])
     data_sorted = data_sorted.reset_index(drop=True)
     window_size = 100
@@ -62,7 +61,6 @@ def pre_processing2(data):
     motion_count_list = [] # count how long the motion status is active
     acc_count_list = []
     temp_count_list = []
-    temp_sum_list = []
     temp_avg_list = []
     
     Motion = data_sorted["Motion"]
@@ -125,62 +123,21 @@ def pre_processing2(data):
             temp.append(data_input[i-j])
         X.append(temp)
     X = np.asarray(X)
-    Y_labels = [1] * X.shape[0]
+    if (normal == True):
+        Y_labels = [1] * X.shape[0]
+    else:
+        Y_labels = [0] * X.shape[0]
     
-    return 0
+    return X, Y_labels
 
 
-'''
-# ### Train the LSTM model 
-# #### add LSTM with input shape (50,3): 50 time steps and 3 features
-
-model = Sequential()
-model.add(LSTM(56, input_shape=(50, 3)))
-model.add(Activation('softmax'))
-
-model.compile(loss='categorical_crossentropy', optimizer='adam',metrics = ['accuracy'])
-print(model.summary())
-X_train, X_test, y_train, y_test = train_test_split(X, Y_labels, test_size=0.3, random_state=0)
-
-
-
-X_train.shape, len(y_train)
-
-
-history = model.fit(X_train, y_train, epochs=5, batch_size=10, verbose=2, shuffle=False)
-history
-
-accr = model.evaluate(X_test,y_test)
-accr
-
-
-prediction = model.predict(X_test, verbose=0)
-prediction.tolist()
-
-
-prediction.shape
-
-
-y_test
-
-len(y_test)
-
-
-for i in range(len(y_test)):
-    y_test[i] = 1
-
-for i in range(len(y_train)):
-    y_train[i] = 1 
-    
-y_train
-'''
 
 
 
 def train_predict(X, Y_labels):
     X_train, X_test, y_train, y_test = train_test_split(X, Y_labels, test_size=0.3, random_state=0)
     model = Sequential()
-    model.add(LSTM(35, input_shape=(50, 3)))
+    model.add(LSTM(35, input_shape=(50, 5)))
     model.add(Dense(1, activation = 'tanh'))
     model.compile(loss='mean_squared_error', optimizer='adam',metrics = ['accuracy'])
     print(model.summary())
@@ -196,8 +153,8 @@ def train_predict2(X, Y_labels):
     X_train, X_test, y_train, y_test = train_test_split(X, Y_labels, test_size=0.3, random_state=0)
     model = Sequential()
     model.add(LSTM(35, input_shape=(50, 5)))
-    model.add(Dense(1, activation = 'tanh'))
-    model.compile(loss='mean_squared_error', optimizer='adam',metrics = ['accuracy'])
+    model.add(Dense(1, activation = 'softmax'))
+    model.compile(loss='binary_crossentropy', optimizer='adam',metrics = ['accuracy'])
     print(model.summary())
 
     history = model.fit(X_train, y_train, epochs=5, batch_size=10, verbose=2, shuffle=False)
@@ -209,9 +166,22 @@ def train_predict2(X, Y_labels):
 
 
 #################
-data = read_data()
-X, Y_labels = pre_processing(data)
+'''
+X, Y_labels = pre_processing()
 y_pred = train_predict(X, Y_labels)
+'''
 
-X, Y_labels = pre_processing2(data)
-y_pred_2 = train_predict2(X, Y_labels)
+
+##############
+X_norm, Y_norm = pre_processing("normal_data.csv", normal = True)
+X_abnormal, Y_abnormal = pre_processing("abnormal_data.csv", normal = False)
+X = np.concatenate((X_norm, X_abnormal), axis=0)
+Y = Y_norm + Y_abnormal
+
+y_pred_2 = train_predict2(X, Y)
+
+y_pred_2.min()
+y_pred_2.max()
+
+
+
