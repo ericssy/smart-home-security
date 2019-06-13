@@ -63,6 +63,7 @@ def train():
 
 autoenc = train()
 data = process_data('abnormal_data.csv')
+data_norm = process_data('normal_data.csv')
 X = data.values
 X_test = X[:int(len(X)*0.5)]
 

@@ -22,10 +22,47 @@ from keras.layers import Activation, Dense
 from sklearn.preprocessing import MinMaxScaler
 from keras.layers import TimeDistributed, RepeatVector
 import random
+import seaborn as sns
 
 
+def pre_processing2(filename, timestep = 10):
+    data = pd.read_csv(filename)
+    data_sorted = data.sort_values(by=['DayOfWeek', 'Time'])
+    data_sorted = data_sorted.reset_index(drop=True)
+    data_sorted['Motion'] = data_sorted['Motion'].map({'inactive': 0, 'active': 1})
+    data_sorted['Acceleration'] = data_sorted['Acceleration'].map({'inactive': 0, 'active': 1})
+    data_sorted['DayOfWeek'] = data_sorted['DayOfWeek'] / 6.0
+    time_transformed = []
+    for i in range(data_sorted.shape[0]):
+        timestamp = data_sorted["Time"][i]
+        time = timestamp.split(':')
+        h = (int)(time[0]) * 60 * 60
+        m = (int)(time[1]) * 60
+        s = (float)(time[2])
+        time = (h + m + s)/ 86400
+        time_transformed.append(time)
+        
+    data_sorted["time_transformed"] = time_transformed
+    data_sorted = data_sorted.drop(["Time"], axis = 1)
+    data_sorted["Temperature"] = (data_sorted["Temperature"] - data_sorted["Temperature"].min()) / (data_sorted["Temperature"].max() - data_sorted["Temperature"].min())
+    data_input = np.asarray(data_sorted)
+    
+    X = []
+    Y_labels = []
+    
+    for i in range(timestep - 1, data_input.shape[0] - 1 ):
+        temp = []
+        for j in range(timestep):
+            temp.append(data_input[i-j])
+        X.append(temp)
+        Y_labels.append(data_input[i+1])
+    X = np.asarray(X)
+    Y_labels = np.asarray(Y_labels)
+    
+    return X, Y_labels
+    
 # transform the features 
-def pre_processing(filename):
+def pre_processing(filename, timestep = 10):
     data = pd.read_csv(filename)
     
     data_sorted = data.sort_values(by=['DayOfWeek', 'Time'])
@@ -90,13 +127,15 @@ def pre_processing(filename):
     scaler = StandardScaler()
     data_input = scaler.fit_transform(data_input)
     
+    
     #Convert the input to the format required by LSTM
     X = []
     Y_labels = []
     
-    for i in range(10 - 1, data_input.shape[0] - 1 ):
+    
+    for i in range(timestep - 1, data_input.shape[0] - 1 ):
         temp = []
-        for j in range(10):
+        for j in range(timestep):
             temp.append(data_input[i-j])
         X.append(temp)
         Y_labels.append(data_input[i+1])
@@ -136,7 +175,6 @@ def train_predict2(X, Y_labels):
     history = model.fit(X_train, y_train, epochs=5, batch_size=5, verbose=2, shuffle=False)
     history
     y_pred = model.predict(X_test, verbose=0)
-    print(classification_report(y_test, y_pred))
     return y_pred
     
 
@@ -165,58 +203,109 @@ def overSampling(X_norm, X_abnormal):
     Y_abnormal = [0] * X_abnormal.shape[0]
     return X_norm, X_abnormal, Y_norm, Y_abnormal
 
+def visualize_mse(MSEs_normal, MSEs_abnormal):
+    #one distribution and one scatter plot
+    index_normal = list(range(len(MSEs_normal)))
+    index_abnormal = list(range(len(MSEs_abnormal)))
+    plt.scatter(index_normal, MSEs_normal, color = "blue", alpha = "0.5", s = 5)
+    plt.scatter(index_abnormal, MSEs_abnormal, color = "orange", alpha = "0.5", s = 5)
+    plt.show()
+    sns.distplot(MSEs_normal, hist=False, rug=True)
+    sns.distplot(MSEs_abnormal, hist=False, rug=True)
+    plt.show()
+    return 0
+    
+def visualize_input(norm, abnormal):
+    index_normal = list(range(norm.shape[0]))
+    plt.plot(index_normal, norm[:,0])
+    plt.title("normal dataset feature 1")
+    plt.show()
+    index_abnormal = list(range(abnormal.shape[0]))
+    
+    plt.plot(index_abnormal, abnormal[:,0])
+    plt.xlim(right = norm.shape[0])
+    plt.title("abnormal dataset feature 1")
+    plt.show()
+    
+    plt.plot(index_normal, norm[:,1])
+    plt.title("normal dataset feature 2")
+    plt.show()
+    plt.plot(index_abnormal, abnormal[:,1])
+    plt.xlim(right = norm.shape[0])
+    plt.title("abnormal dataset feature 2")
+    plt.show()
+    
+    plt.plot(index_normal, norm[:,2])
+    plt.title("normal dataset feature 3")
+    plt.show()
+    plt.plot(index_abnormal, abnormal[:,2])
+    plt.xlim(right = norm.shape[0])
+    plt.title("abnormal dataset feature 3")
+    plt.show()
+    
+    plt.plot(index_normal, norm[:,3])
+    plt.title("normal dataset feature 4")
+    plt.show()
+    plt.plot(index_abnormal, abnormal[:,3])
+    plt.xlim(right = norm.shape[0])
+    plt.title("abnormal dataset feature 4")
+    plt.show()
+    
+    plt.plot(index_normal, norm[:,4])
+    plt.title("normal dataset feature 5")
+    plt.show()
+    plt.plot(index_abnormal, abnormal[:,4])
+    plt.xlim(right = norm.shape[0])
+    plt.title("abnormal dataset feature 5")
+    plt.show()
+    
 
+    
+    
 
 
 '''
 split the normal data into training and validation sets, 
 and the abnormal data as testing set
 '''
-X_norm, Y_norm = pre_processing("normal_data.csv")
+X_norm, Y_norm = pre_processing2("normal_data.csv", 20)
 # validation set 
-X_abnormal, Y_abnormal = pre_processing("abnormal_data.csv")
+X_abnormal, Y_abnormal = pre_processing2("abnormal_data.csv", 20)
 ### train validation split
 X_train, X_vali, y_train, y_vali = train_test_split(X_norm, Y_norm, test_size=0.2, random_state=0)
 
-
+visualize_input(Y_norm, Y_abnormal)
 
 model = Sequential()
-model.add(LSTM(128, activation='relu', return_sequences=True, input_shape=(10,5)))
-model.add(LSTM(128, activation='relu'))
+model.add(LSTM(128, activation='relu', return_sequences=True, input_shape=(20,5)))
+model.add(LSTM(128, activation='relu', return_sequences=True))
+model.add(LSTM(64, activation='relu'))
 model.add(Dense(5))
 
 print(model.summary())
 model.compile(loss='mse', optimizer='adam')
-history = model.fit(X_train, y_train, epochs=5, validation_data=(X_vali, y_vali), batch_size=5, verbose=1, shuffle=True)
+history = model.fit(X_train, y_train, epochs=10, validation_data=(X_vali, y_vali), batch_size=32, verbose=1, shuffle=True)
 history
 y_vali_pred = model.predict(X_vali, verbose=0)
 
 '''
+_________________________________________________________________
 Layer (type)                 Output Shape              Param #   
 =================================================================
-lstm_33 (LSTM)               (None, 10, 128)           68608     
+lstm_14 (LSTM)               (None, 20, 128)           68608     
 _________________________________________________________________
-lstm_34 (LSTM)               (None, 128)               131584    
+lstm_15 (LSTM)               (None, 20, 128)           131584    
 _________________________________________________________________
-dense_13 (Dense)             (None, 5)                 645       
+lstm_16 (LSTM)               (None, 64)                49408     
+_________________________________________________________________
+dense_6 (Dense)              (None, 5)                 325       
 =================================================================
-Total params: 200,837
-Trainable params: 200,837
+Total params: 249,925
+Trainable params: 249,925
 Non-trainable params: 0
 _________________________________________________________________
 None
-Train on 79912 samples, validate on 19979 samples
-Epoch 1/5
-79912/79912 [==============================] - 353s 4ms/step - loss: 0.0274 - val_loss: 0.0153
-Epoch 2/5
-79912/79912 [==============================] - 350s 4ms/step - loss: 0.0139 - val_loss: 0.0138
-Epoch 3/5
-79912/79912 [==============================] - 350s 4ms/step - loss: 0.0131 - val_loss: 0.0133
-Epoch 4/5
-79912/79912 [==============================] - 350s 4ms/step - loss: 0.0127 - val_loss: 0.0127
-Epoch 5/5
-79912/79912 [==============================] - 353s 4ms/step - loss: 0.0125 - val_loss: 0.0124
-
+Train on 79984 samples, validate on 19996 samples
 '''
 
 
@@ -232,10 +321,10 @@ plt.show()
 mse_list = []
 for i in range(len(y_vali_pred)):
   mse_list.append(np.mean(np.square(np.subtract(y_vali_pred[i], y_vali[i]))))
-threshold = np.percentile(mse_list, 95)
-print("threshold is: ", threshold)
+threshold = np.percentile(mse_list, 93)
+print("mse threshold is: ", threshold)
 
-X_abnormal, y_abnormal = pre_processing("abnormal_data.csv")
+X_abnormal, y_abnormal = pre_processing("abnormal_data.csv", 20)
 
 
 t = 0
@@ -255,25 +344,34 @@ print("number of samples predicted to be normal in abnormal data: ", t)
 print("number of abnormal data: ", len(y_abnormal))
 print("abnormality accuracy():", (len(y_abnormal) - t)/ len(y_abnormal))
 
-
+visualize_mse(mse_list, abnormal_mse)
 
 
 '''
 Suppose positive = abnormal   negative = normal 
 
-When the threshold percentile is set to 95 (false positive = 0.05), 
-the abnormality accuracy (true positive) is 0.1800
-count of times predicted to be normal in abnormal data:  8110
-number of abnormal data:  9891
-abnormality accuracy(): 0.18006268324739663
+When the threshold percentile is set to 95% (false positive = 0.05), 
+the abnormality accuracy (true positive) is 0.8314
+mse threshold is:  0.3038325941684792
+number of samples predicted to be normal in abnormal data:  1665
+number of abnormal data:  9881
+abnormality accuracy(true positive rate): 0.8314947879769254
 
 
 
-when set the threshold percentile to be 40 (false positive =  0.6), 
-we get abnormality accuracy (true positive) of 0.6711151551
-number of samples predicted to be normal in abnormal data:  3253
-number of abnormal data:  9891
-abnormality accuracy(): 0.6711151551915883
+when set the threshold percentile to be 90% (false positive =  0.1), 
+we get abnormality accuracy (true positive) of 0.942212
+threshold is:  0.1613987153072845
+number of samples predicted to be normal in abnormal data:  571
+number of abnormal data:  9881
+abnormality accuracy(): 0.9422123266875823
+
+when set the threshold percentile to be 93% (false positive =  0.07), 
+we get abnormality accuracy (true positive) of 0.9086124886145127
+mse threshold is:  0.20700430233242026
+number of samples predicted to be normal in abnormal data:  903
+number of abnormal data:  9881
+abnormality accuracy(): 0.9086124886145127
 '''
 
 
@@ -284,7 +382,7 @@ generate the ROC curve
 true_positive_rate = []
 false_positive_rate = []
 thresholds = []
-for i in range(0, 100, 5):
+for i in range(0, 100, 1):
   threshold = np.percentile(mse_list, i)
   t = 0
   for mse in abnormal_mse :
@@ -297,12 +395,14 @@ for i in range(0, 100, 5):
   
 
 
-print(true_positive_rate)
-print(false_positive_rate)
+print("true positive rate: \n", true_positive_rate)
+print("\n")
+print("false positive rate: \n ", false_positive_rate)
 
 plt.plot(false_positive_rate, true_positive_rate)
 plt.xlabel("false_positive_rate")
 plt.ylabel("true_positive_rate")
+plt.title("ROC curve")
 plt.show()
     
 
