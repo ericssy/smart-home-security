@@ -24,17 +24,34 @@ from keras.layers import TimeDistributed, RepeatVector
 import random
 import seaborn as sns
 
+def import_csv(filename):
+    data = pd.read_csv(filename)
+    time_transformed = []
+    for i in range(data.shape[0]):
+        timestamp = data["Time"][i]
+        time = timestamp.split(':')
+        h = (int)(time[0]) * 60 * 60
+        m = (int)(time[1]) * 60
+        s = (float)(time[2])
+        time = (h + m + s)
+        time_transformed.append(time)
+    data["time_transformed"] = time_transformed
+    data_sorted = data.sort_values(by=['DayOfWeek', 'time_transformed'])
+    data_sorted = data_sorted.reset_index(drop=True)
+    return data_sorted
+
+#data_norm = import_csv("normal_data.csv")
+#data_abnormal = import_csv("abnormal_data.csv")
+
 
 def pre_processing2(filename, timestep = 10):
     data = pd.read_csv(filename)
-    data_sorted = data.sort_values(by=['DayOfWeek', 'Time'])
-    data_sorted = data_sorted.reset_index(drop=True)
-    data_sorted['Motion'] = data_sorted['Motion'].map({'inactive': 0, 'active': 1})
-    data_sorted['Acceleration'] = data_sorted['Acceleration'].map({'inactive': 0, 'active': 1})
-    data_sorted['DayOfWeek'] = data_sorted['DayOfWeek'] / 6.0
+    data['Motion'] = data['Motion'].map({'inactive': 0, 'active': 1})
+    data['Acceleration'] = data['Acceleration'].map({'inactive': 0, 'active': 1})
+    data['DayOfWeek'] = data['DayOfWeek'] / 6.0
     time_transformed = []
-    for i in range(data_sorted.shape[0]):
-        timestamp = data_sorted["Time"][i]
+    for i in range(data.shape[0]):
+        timestamp = data["Time"][i]
         time = timestamp.split(':')
         h = (int)(time[0]) * 60 * 60
         m = (int)(time[1]) * 60
@@ -42,11 +59,12 @@ def pre_processing2(filename, timestep = 10):
         time = (h + m + s)/ 86400
         time_transformed.append(time)
         
-    data_sorted["time_transformed"] = time_transformed
-    data_sorted = data_sorted.drop(["Time"], axis = 1)
-    data_sorted["Temperature"] = (data_sorted["Temperature"] - data_sorted["Temperature"].min()) / (data_sorted["Temperature"].max() - data_sorted["Temperature"].min())
+    data["time_transformed"] = time_transformed
+    data = data.drop(["Time"], axis = 1)
+    data["Temperature"] = (data["Temperature"] - data["Temperature"].min()) / (data["Temperature"].max() - data["Temperature"].min())
+    data_sorted = data.sort_values(by=['DayOfWeek', 'time_transformed'])
+    data_sorted = data_sorted.reset_index(drop=True)
     data_input = np.asarray(data_sorted)
-    
     X = []
     Y_labels = []
     
@@ -58,7 +76,6 @@ def pre_processing2(filename, timestep = 10):
         Y_labels.append(data_input[i+1])
     X = np.asarray(X)
     Y_labels = np.asarray(Y_labels)
-    
     return X, Y_labels
     
 # transform the features 
@@ -150,7 +167,7 @@ def pre_processing(filename, timestep = 10):
 def train_predict(X, Y_labels):
     X_train, X_test, y_train, y_test = train_test_split(X, Y_labels, test_size=0.3, random_state=0)
     model = Sequential()
-    model.add(LSTM(35, input_shape=(50, 5)))
+    model.add(LSTM(35, input_shape=(20, 5)))
     model.add(Dense(1, activation = 'tanh'))
     model.compile(loss='mean_squared_error', optimizer='adam',metrics = ['accuracy'])
     print(model.summary())
@@ -167,7 +184,7 @@ def train_predict2(X, Y_labels):
     X_train, X_test, y_train, y_test = train_test_split(X, Y_labels, test_size=0.2, random_state=0)
     # validation set
     model = Sequential()
-    model.add(LSTM(35, input_shape=(50, 5)))
+    model.add(LSTM(35, input_shape=(20, 5)))
     model.add(Dense(1, activation = 'softmax'))
     model.compile(loss='binary_crossentropy', optimizer='adam',metrics = ['accuracy'])
     print(model.summary())
@@ -196,7 +213,7 @@ def overSampling(X_norm, X_abnormal):
     while (size_abnormal <= size_norm):
         rand_number = random.randint(0, size_abnormal_original)
         sample_temp = X_abnormal[rand_number]
-        sample_temp =  np.reshape(sample_temp, (1,50,5))
+        sample_temp =  np.reshape(sample_temp, (1,20,5))
         X_abnormal = np.append(X_abnormal, sample_temp, axis = 0)
         size_abnormal = size_abnormal + 1
     Y_norm = [1] * X_norm.shape[0]
@@ -209,9 +226,11 @@ def visualize_mse(MSEs_normal, MSEs_abnormal):
     index_abnormal = list(range(len(MSEs_abnormal)))
     plt.scatter(index_normal, MSEs_normal, color = "blue", alpha = "0.5", s = 5)
     plt.scatter(index_abnormal, MSEs_abnormal, color = "orange", alpha = "0.5", s = 5)
+    plt.title("mse vs. time (blue: normal, orange: abnormal)")
     plt.show()
     sns.distplot(MSEs_normal, hist=False, rug=True)
     sns.distplot(MSEs_abnormal, hist=False, rug=True)
+    plt.title("distribution of MSE for normal and abnormal data")
     plt.show()
     return 0
     
@@ -258,10 +277,7 @@ def visualize_input(norm, abnormal):
     plt.xlim(right = norm.shape[0])
     plt.title("abnormal dataset feature 5")
     plt.show()
-    
-
-    
-    
+    return 0
 
 
 '''
@@ -270,7 +286,7 @@ and the abnormal data as testing set
 '''
 X_norm, Y_norm = pre_processing2("normal_data.csv", 20)
 # validation set 
-X_abnormal, Y_abnormal = pre_processing2("abnormal_data.csv", 20)
+X_abnormal, Y_abnormal = pre_processing2("abnormal_with_simulated_normal_temp.csv", 20)
 ### train validation split
 X_train, X_vali, y_train, y_vali = train_test_split(X_norm, Y_norm, test_size=0.2, random_state=0)
 
@@ -357,6 +373,12 @@ number of samples predicted to be normal in abnormal data:  1665
 number of abnormal data:  9881
 abnormality accuracy(true positive rate): 0.8314947879769254
 
+when set the threshold percentile to be 93% (false positive =  0.07), 
+we get abnormality accuracy (true positive) of 0.9086124886145127
+mse threshold is:  0.20700430233242026
+number of samples predicted to be normal in abnormal data:  903
+number of abnormal data:  9881
+abnormality accuracy(): 0.9086124886145127
 
 
 when set the threshold percentile to be 90% (false positive =  0.1), 
@@ -366,12 +388,7 @@ number of samples predicted to be normal in abnormal data:  571
 number of abnormal data:  9881
 abnormality accuracy(): 0.9422123266875823
 
-when set the threshold percentile to be 93% (false positive =  0.07), 
-we get abnormality accuracy (true positive) of 0.9086124886145127
-mse threshold is:  0.20700430233242026
-number of samples predicted to be normal in abnormal data:  903
-number of abnormal data:  9881
-abnormality accuracy(): 0.9086124886145127
+
 '''
 
 
