@@ -286,7 +286,7 @@ and the abnormal data as testing set
 '''
 X_norm, Y_norm = pre_processing2("normal_data.csv", 20)
 # validation set 
-X_abnormal, Y_abnormal = pre_processing2("abnormal_with_simulated_normal_temp.csv", 20)
+X_abnormal, Y_abnormal = pre_processing2("simulated_data.csv", 20)
 ### train validation split
 X_train, X_vali, y_train, y_vali = train_test_split(X_norm, Y_norm, test_size=0.2, random_state=0)
 
@@ -333,7 +333,7 @@ plt.show()
 
 
 #### using mean square error to set a threshold for testing
-#### the percentile is set to 40 here 
+#### the percentile is set to  here 
 mse_list = []
 for i in range(len(y_vali_pred)):
   mse_list.append(np.mean(np.square(np.subtract(y_vali_pred[i], y_vali[i]))))
