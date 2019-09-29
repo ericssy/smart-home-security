@@ -4,7 +4,7 @@
 
 ##### Smaller time interval bewteen two detections 
 
-In the original abnormal dataset, the average time difference between two detections (two consecutive samples) is 43.0 seconds, which is way much greater than the average 6.04 seconds in the normal dataset. I think the average time difference bewteen each detection in the abnormal dataset should be at similar or smaller than that in the normal dataset. The time inverval (in seconds) between two detection windows in the new simulated abnormal data is a beta distribution with $\alpha = 1.394, \beta = 9.54 * 10 ^{13}​$, shifted and scaled with parameters $loc = -0.068, scale = 3.66 * 10^{14} ​$ (<https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.beta.html>). The average time difference in the new simulated data is 5.27 seconds
+In the original abnormal dataset, the average time difference between two detections (two consecutive samples) is 43.0 seconds, which is way much greater than the average 6.04 seconds in the normal dataset. I think the average time difference bewteen each detection in the abnormal dataset should be at similar or smaller than that in the normal dataset. The time inverval (in seconds) between two detection windows in the new simulated abnormal data is a beta distribution with $\alpha = 1.394, \beta = 9.54 * 10 ^{13}$, shifted and scaled with parameters $loc = -0.068, scale = 3.66 * 10^{14}$ (<https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.beta.html>). The average time difference in the new simulated data is 5.27 seconds
 
 ##### More frequent "Inactive" Status in the new abnormal data
 
