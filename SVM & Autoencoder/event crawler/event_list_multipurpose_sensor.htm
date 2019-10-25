@@ -1,0 +1,2436 @@
+<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"><!--<![endif]-->
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="_csrf" content="3da0b3a3-e6a7-4df7-93aa-da4580ef6fa7"/>
+	<!-- default header name is X-CSRF-TOKEN -->
+	<meta name="_csrf_header" content="X-CSRF-TOKEN"/>
+	<title>Events List</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<link rel="shortcut icon" type="image/x-icon" href="/assets/components/common/favicon-4993383b83174ec4d5a7b26bcc8df5b8.ico"/>
+	<link rel="apple-touch-icon" href="/assets/components/common/apple-touch-icon-b7275dbac7a4078e4f44859751581016.png"/>
+	<link rel="apple-touch-icon" sizes="114x114" href="/assets/components/common/apple-touch-icon-retina-35ea8b3c6aa433fa74ebc97d0b5a2a53.png"/>
+
+	
+		<link rel="stylesheet" href="/assets/base/bootstrap-framework-ca068de267e66f972264227b95ad8cb1.css"/>
+	
+
+	<link rel="stylesheet" href="/assets/base/common-77e2fb036db019b4c759f2bb145e94d3.css"/>
+
+	
+		<script src="/assets/libs/underscore/underscore-6e1f1c149dc88c708f9bfce4a061187f.js" type="text/javascript" ></script>
+	
+
+	
+
+	<script src="/assets/apps/main/main-app-5811442e0bc96e2d7374677668e7edc4.js" type="text/javascript" ></script>
+
+	
+		<script src="/assets/libs/bootstrap/bootstrap-e3bccdc29cf6e1d0f3e7bc54ccf086ef.js" type="text/javascript" ></script>
+	
+
+	<!--[if lt IE 9]>
+	<script src="/assets/libs/html5shiv/html5shiv-4163e58056c3c7ff50f91c9d141fefaa.js" type="text/javascript" ></script>
+	<![endif]-->
+	
+		<script type="text/javascript">
+			window.heap=window.heap||[],heap.load=function(t,e){window.heap.appid=t,window.heap.config=e;var a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src=("https:"===document.location.protocol?"https:":"http:")+"//cdn.heapanalytics.com/js/heap-"+t+".js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(a,n);for(var o=function(t){return function(){heap.push([t].concat(Array.prototype.slice.call(arguments,0)))}},p=["clearEventProperties","identify","setEventProperties","track","unsetEventProperty"],c=0;c<p.length;c++)heap[p[c]]=o(p[c])};
+			heap.load("2894297474");
+		</script>
+	
+	
+		<meta name="layout" content="bootstrap-fixed">
+		
+		
+		<link rel="stylesheet" href="/assets/apps/event/event-list-fba5b4c3c6d9adb792e868a7af50177a.css"/>
+		<script src="/assets/libs/jquery-plugins/jquery-simple-datetimepicker-7ae40881d8b9513ca54ebbcd89c97932.js" type="text/javascript" ></script>
+		<script src="/assets/apps/ide/ide-app-11aefb217f42ea3de1a5219042dec59f.js" type="text/javascript" ></script>
+	
+</head>
+<body class="production-env">
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-M4C995"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script type="application/javascript">
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-M4C995');
+</script>
+<!-- End Google Tag Manager -->
+
+
+
+	<header class="header-main minimized">
+
+	
+		<div class="login-tab">
+			<div class="login-tab-welcome">
+				<div class="st-arrow-container">
+					<div class="st-arrow-dropdown"></div>
+				</div>
+				
+				
+					
+					
+						Welcome back, <strong class="username"><a href="/user/show">shensiyuan25@gmail.com</a></strong>
+					
+				
+			</div>
+			<ul>
+				
+	
+
+
+
+				
+					
+
+					
+					
+
+					
+
+					
+					
+
+					<li><a href="/logout/index">Logout</a></li>
+				
+
+			</ul>
+		</div>
+	
+	
+	
+		<div>
+			<div class="gradient-top-bar"></div>
+			<div class="clearfix">
+				<div id="topNavigation" style="display:none;">
+					<div class="mobile-menu-brand"><img src='/assets/components/common/smartthings-logo.png' alt='logo' /></div>
+					
+						<div class="mobile-menu-icon"><div><div></div></div></div>
+					
+				</div>
+			</div>
+		</div>
+</header>
+
+	<div class="mobile-menu">
+	<ul class="ul-reset">
+		
+			<li><a href="/user/show">Logged in as: shensiyuan25@gmail.com</a></li>
+			<li><a href="/logout/index">Logout</a></li>
+		
+		
+		<li><a href="https://shop.smartthings.com">Shop</a></li>
+		<li><a href="http://smartthings.com">Learn More</a></li>
+		<li><a href="http://smartthings.com/build">Build</a></li>
+		<li><a href="http://support.smartthings.com">Support</a></li>
+		
+			<ul class="logged-in-menu ul-reset">
+				<li class="menu-title">Developer Tools:</li>
+				
+	
+
+
+
+				<li class=""><a href="/location/list"><span class="hidden-sm hidden-xs">My </span>Locations</a></li>
+				<li class=""><a href="/hub/list"><span class="hidden-sm hidden-xs">My </span>Hubs</a></li>
+				<li class=""><a href="/device/list"><span class="hidden-sm hidden-xs">My </span>Devices</a></li>
+				
+					<li class=""><a href="/ide/apps"><span class="hidden-sm hidden-xs">My </span>SmartApps</a></li>
+					<li class=""><a href="/ide/devices"><span class="hidden-sm hidden-xs">My </span>Device Handlers</a></li>
+					
+						<li class=""><a href="/ide/submissions"><span class="hidden-sm hidden-xs">My </span>Publication Requests</a></li>
+					
+					<li class=""><a href="/ide/logs">Logs</a></li>
+				
+				
+				<li class=""><a href="http://docs.smartthings.com/" target="_newWindow">Documentation</a></li>
+			</ul>
+		
+	</ul>
+</div>
+
+	
+		
+	<div class="dev-nav-wrap">
+
+	<div class="navbar navbar-default main">
+		<div class="container-fluid">
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav main">
+					
+						<li class=""><a href="/location/list"><span class="hidden-sm hidden-xs">My </span>Locations</a></li>
+						<li class=""><a href="/hub/list"><span class="hidden-sm hidden-xs">My </span>Hubs</a></li>
+						<li class=""><a href="/device/list"><span class="hidden-sm hidden-xs">My </span>Devices</a></li>
+						
+							<li class=""><a href="/ide/apps"><span class="hidden-sm hidden-xs">My </span>SmartApps</a></li>
+							<li class=""><a href="/ide/devices"><span class="hidden-sm hidden-xs">My </span>Device Handlers</a></li>
+							
+								<li class=""><a href="/ide/submissions"><span class="hidden-sm hidden-xs">My </span>Publication Requests</a></li>
+							
+							<li class=""><a href="/ide/logs">Live Logging</a></li>
+						
+						<li class=""><a href="http://docs.smartthings.com/" target="_newWindow">Documentation</a></li>
+					
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	</div>
+
+
+	
+
+
+<script id="success-template" type="text/x-handlebars-template">
+	<div class="inner-wrap">
+		<div class="alert alert-success alert-dismissible flash">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			{{message}}
+		</div>
+	</div>
+</script>
+
+<script type="application/javascript">
+	function _resize_window_delayed() {
+		setTimeout(function() {
+			window.dispatchEvent(new Event('resize'));
+		}, 50)
+	}
+</script>
+
+<div id="flash-message-container" class="row">
+
+
+
+
+</div>
+
+
+		<main class="event-list-page page content">
+		<div class="nav" role="navigation">
+			
+			<ul class="nav nav-pills">
+				
+					<li><a href="/device/show/59c867da-d655-4615-8f82-5be8647936f9">&laquo; Multipurpose Sensor (Device)</a></li>
+				
+			</ul>
+		</div>
+		<div class="list-acl">
+
+	<input type="hidden" name="all" value="" id="all" />
+	<input type="hidden" name="source" value="" id="source" />
+	<input type="hidden" name="max" value="50" id="max" />
+	<input type="hidden" name="id" value="59c867da-d655-4615-8f82-5be8647936f9" id="id" />
+	<input type="hidden" name="type" value="device" id="type" />
+	<input type="hidden" name="eventType" value="" id="eventType" />
+	<input type="hidden" name="startAfter" value="8f388bd4-f35b-11e9-92fb-d052a8a7fe80" id="startAfter" />
+	<input type="hidden" name="loadingMoreEvents" value="false" id="loadingMoreEvents" />
+
+	<h1>
+		Multipurpose Sensor (Device) Events &mdash;
+		
+			<a id="displayedLink" href="javascript://"
+			class="text-link active-source-link">displayed</a> |
+			<a id="allLink" href="javascript://" class="text-link ">all</a> |
+		
+		<a id="sourceLink" href="javascript://" class="text-link ">from device</a>
+
+		<div id="fetchingEventsSpinner" class="spinner"></div>
+		<div class="batch-size-max" style="">
+			<select name="batchSizeSelect" id="batchSizeSelect" >
+<option value="10" >10</option>
+<option value="25" >25</option>
+<option value="50" selected="selected" >50</option>
+<option value="100" >100</option>
+<option value="200" >200</option>
+</select>
+		</div>
+		<div class="events-name-filter" style="display: none;">
+			<input type="submit" id="clearBtn" name="clear" class="btn btn-default" value="Clear" />
+			<span class="name-filter-label">Name Filter</span>
+			<input type="text" name="nameFilter" class="form-control name-filter-form-control" value="e.g. contact | activity | !ping | accel*" id="nameFilter" />
+		</div>
+	</h1>
+	
+	<div class="table-wrap">
+		<table class="table table-bordered table-condensed tbl-sm" id="events-table">
+			<thead>
+			<tr>
+				<th>Date</th>
+				<th>Source</th>
+				<th>Type</th>
+				<th>Name</th>
+				<th>Value</th>
+				<th>User</th>
+				<th>Displayed Text</th>
+				
+			</tr>
+			</thead>
+			<tbody class="events-table">
+			
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/e2387df7-f36d-11e9-9557-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 3:14:48.384 PM EDT<br />
+					<em>18 minutes ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="acceleration" class="tooltip-init" >acceleration</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="inactive" data-toggle="tooltip">
+			
+				inactive
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor acceleration is inactive" data-toggle="tooltip">
+			
+				Multipurpose Sensor acceleration is inactive
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/dc3f01d1-f36d-11e9-9552-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 3:14:38.361 PM EDT<br />
+					<em>18 minutes ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="acceleration" class="tooltip-init" >acceleration</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="active" data-toggle="tooltip">
+			
+				active
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor acceleration is active" data-toggle="tooltip">
+			
+				Multipurpose Sensor acceleration is active
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/da85a614-f36d-11e9-954f-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 3:14:35.468 PM EDT<br />
+					<em>18 minutes ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="status" class="tooltip-init" >status</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="closed" data-toggle="tooltip">
+			
+				closed
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor status is closed" data-toggle="tooltip">
+			
+				Multipurpose Sensor status is closed
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/ce5acc38-f36d-11e9-954c-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 3:14:15.055 PM EDT<br />
+					<em>19 minutes ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="acceleration" class="tooltip-init" >acceleration</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="inactive" data-toggle="tooltip">
+			
+				inactive
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor acceleration is inactive" data-toggle="tooltip">
+			
+				Multipurpose Sensor acceleration is inactive
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/c2652869-f36d-11e9-953e-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 3:13:54.990 PM EDT<br />
+					<em>19 minutes ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="acceleration" class="tooltip-init" >acceleration</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="active" data-toggle="tooltip">
+			
+				active
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor acceleration is active" data-toggle="tooltip">
+			
+				Multipurpose Sensor acceleration is active
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/b197c732-f36d-11e9-9528-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 3:13:26.800 PM EDT<br />
+					<em>20 minutes ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="status" class="tooltip-init" >status</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="open" data-toggle="tooltip">
+			
+				open
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor status is open" data-toggle="tooltip">
+			
+				Multipurpose Sensor status is open
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/b0756ae0-f36d-11e9-9526-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 3:13:24.898 PM EDT<br />
+					<em>20 minutes ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="acceleration" class="tooltip-init" >acceleration</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="inactive" data-toggle="tooltip">
+			
+				inactive
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor acceleration is inactive" data-toggle="tooltip">
+			
+				Multipurpose Sensor acceleration is inactive
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/aa7b3029-f36d-11e9-9520-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 3:13:14.869 PM EDT<br />
+					<em>20 minutes ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="acceleration" class="tooltip-init" >acceleration</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="active" data-toggle="tooltip">
+			
+				active
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor acceleration is active" data-toggle="tooltip">
+			
+				Multipurpose Sensor acceleration is active
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/04d7b395-f36b-11e9-94fc-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 2:54:17.980 PM EDT<br />
+					<em>39 minutes ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="temperature" class="tooltip-init" >temperature</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="67" data-toggle="tooltip">
+			
+				67
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor was 67&deg;F" data-toggle="tooltip">
+			
+				Multipurpose Sensor was 67&deg;F
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/9e9d6af5-f36a-11e9-94f0-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 2:51:26.471 PM EDT<br />
+					<em>42 minutes ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="status" class="tooltip-init" >status</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="closed" data-toggle="tooltip">
+			
+				closed
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor status is closed" data-toggle="tooltip">
+			
+				Multipurpose Sensor status is closed
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/95ed5a2b-f36a-11e9-94e5-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 2:51:11.895 PM EDT<br />
+					<em>42 minutes ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="acceleration" class="tooltip-init" >acceleration</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="inactive" data-toggle="tooltip">
+			
+				inactive
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor acceleration is inactive" data-toggle="tooltip">
+			
+				Multipurpose Sensor acceleration is inactive
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/9074a180-f36a-11e9-94da-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 2:51:02.715 PM EDT<br />
+					<em>42 minutes ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="status" class="tooltip-init" >status</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="open" data-toggle="tooltip">
+			
+				open
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor status is open" data-toggle="tooltip">
+			
+				Multipurpose Sensor status is open
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/8ff39cd7-f36a-11e9-94d9-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 2:51:01.870 PM EDT<br />
+					<em>42 minutes ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="acceleration" class="tooltip-init" >acceleration</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="active" data-toggle="tooltip">
+			
+				active
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor acceleration is active" data-toggle="tooltip">
+			
+				Multipurpose Sensor acceleration is active
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/5291c340-f36a-11e9-94cd-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 2:49:18.887 PM EDT<br />
+					<em>44 minutes ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="acceleration" class="tooltip-init" >acceleration</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="inactive" data-toggle="tooltip">
+			
+				inactive
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor acceleration is inactive" data-toggle="tooltip">
+			
+				Multipurpose Sensor acceleration is inactive
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/4d575259-f36a-11e9-94c7-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 2:49:10.116 PM EDT<br />
+					<em>44 minutes ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="status" class="tooltip-init" >status</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="closed" data-toggle="tooltip">
+			
+				closed
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor status is closed" data-toggle="tooltip">
+			
+				Multipurpose Sensor status is closed
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/4ac66cd3-f36a-11e9-94be-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 2:49:05.811 PM EDT<br />
+					<em>44 minutes ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="status" class="tooltip-init" >status</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="open" data-toggle="tooltip">
+			
+				open
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor status is open" data-toggle="tooltip">
+			
+				Multipurpose Sensor status is open
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/46da6415-f36a-11e9-94b7-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 2:48:59.231 PM EDT<br />
+					<em>44 minutes ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="status" class="tooltip-init" >status</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="closed" data-toggle="tooltip">
+			
+				closed
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor status is closed" data-toggle="tooltip">
+			
+				Multipurpose Sensor status is closed
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/469dcba8-f36a-11e9-94b6-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 2:48:58.834 PM EDT<br />
+					<em>44 minutes ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="acceleration" class="tooltip-init" >acceleration</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="active" data-toggle="tooltip">
+			
+				active
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor acceleration is active" data-toggle="tooltip">
+			
+				Multipurpose Sensor acceleration is active
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/4451e483-f36a-11e9-94b3-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 2:48:54.981 PM EDT<br />
+					<em>44 minutes ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="status" class="tooltip-init" >status</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="open" data-toggle="tooltip">
+			
+				open
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor status is open" data-toggle="tooltip">
+			
+				Multipurpose Sensor status is open
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/6a9de201-f369-11e9-94a4-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 2:42:49.735 PM EDT<br />
+					<em>50 minutes ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="acceleration" class="tooltip-init" >acceleration</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="inactive" data-toggle="tooltip">
+			
+				inactive
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor acceleration is inactive" data-toggle="tooltip">
+			
+				Multipurpose Sensor acceleration is inactive
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/6888d7e3-f369-11e9-949f-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 2:42:46.242 PM EDT<br />
+					<em>50 minutes ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="status" class="tooltip-init" >status</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="closed" data-toggle="tooltip">
+			
+				closed
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor status is closed" data-toggle="tooltip">
+			
+				Multipurpose Sensor status is closed
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/661dbe25-f369-11e9-9499-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 2:42:42.185 PM EDT<br />
+					<em>50 minutes ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="status" class="tooltip-init" >status</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="open" data-toggle="tooltip">
+			
+				open
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor status is open" data-toggle="tooltip">
+			
+				Multipurpose Sensor status is open
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/64abc1b3-f369-11e9-9494-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 2:42:39.760 PM EDT<br />
+					<em>50 minutes ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="status" class="tooltip-init" >status</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="closed" data-toggle="tooltip">
+			
+				closed
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor status is closed" data-toggle="tooltip">
+			
+				Multipurpose Sensor status is closed
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/64a6617e-f369-11e9-9493-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 2:42:39.725 PM EDT<br />
+					<em>50 minutes ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="acceleration" class="tooltip-init" >acceleration</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="active" data-toggle="tooltip">
+			
+				active
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor acceleration is active" data-toggle="tooltip">
+			
+				Multipurpose Sensor acceleration is active
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/5de2b052-f369-11e9-9490-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 2:42:28.376 PM EDT<br />
+					<em>51 minutes ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="status" class="tooltip-init" >status</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="open" data-toggle="tooltip">
+			
+				open
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor status is open" data-toggle="tooltip">
+			
+				Multipurpose Sensor status is open
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/ee91fff2-f368-11e9-9475-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 2:39:21.620 PM EDT<br />
+					<em>54 minutes ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="acceleration" class="tooltip-init" >acceleration</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="inactive" data-toggle="tooltip">
+			
+				inactive
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor acceleration is inactive" data-toggle="tooltip">
+			
+				Multipurpose Sensor acceleration is inactive
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/eaed2ac0-f368-11e9-946b-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 2:39:15.507 PM EDT<br />
+					<em>54 minutes ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="status" class="tooltip-init" >status</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="closed" data-toggle="tooltip">
+			
+				closed
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor status is closed" data-toggle="tooltip">
+			
+				Multipurpose Sensor status is closed
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/e899de5a-f368-11e9-9465-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 2:39:11.605 PM EDT<br />
+					<em>54 minutes ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="acceleration" class="tooltip-init" >acceleration</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="active" data-toggle="tooltip">
+			
+				active
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor acceleration is active" data-toggle="tooltip">
+			
+				Multipurpose Sensor acceleration is active
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/e880bf67-f368-11e9-9462-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 2:39:11.441 PM EDT<br />
+					<em>54 minutes ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="status" class="tooltip-init" >status</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="open" data-toggle="tooltip">
+			
+				open
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor status is open" data-toggle="tooltip">
+			
+				Multipurpose Sensor status is open
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/d7ceac09-f368-11e9-945c-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 2:38:43.430 PM EDT<br />
+					<em>54 minutes ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="acceleration" class="tooltip-init" >acceleration</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="inactive" data-toggle="tooltip">
+			
+				inactive
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor acceleration is inactive" data-toggle="tooltip">
+			
+				Multipurpose Sensor acceleration is inactive
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/d039e0db-f368-11e9-9454-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 2:38:30.711 PM EDT<br />
+					<em>55 minutes ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="status" class="tooltip-init" >status</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="closed" data-toggle="tooltip">
+			
+				closed
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor status is closed" data-toggle="tooltip">
+			
+				Multipurpose Sensor status is closed
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/cd206702-f368-11e9-9449-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 2:38:25.511 PM EDT<br />
+					<em>55 minutes ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="status" class="tooltip-init" >status</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="open" data-toggle="tooltip">
+			
+				open
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor status is open" data-toggle="tooltip">
+			
+				Multipurpose Sensor status is open
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/cbda372a-f368-11e9-9446-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 2:38:23.373 PM EDT<br />
+					<em>55 minutes ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="acceleration" class="tooltip-init" >acceleration</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="active" data-toggle="tooltip">
+			
+				active
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor acceleration is active" data-toggle="tooltip">
+			
+				Multipurpose Sensor acceleration is active
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/9fa7b52b-f364-11e9-93d9-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 2:08:31.235 PM EDT<br />
+					<em>1 hour ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="acceleration" class="tooltip-init" >acceleration</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="inactive" data-toggle="tooltip">
+			
+				inactive
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor acceleration is inactive" data-toggle="tooltip">
+			
+				Multipurpose Sensor acceleration is inactive
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/9be8ab8b-f364-11e9-93d1-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 2:08:24.950 PM EDT<br />
+					<em>1 hour ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="status" class="tooltip-init" >status</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="closed" data-toggle="tooltip">
+			
+				closed
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor status is closed" data-toggle="tooltip">
+			
+				Multipurpose Sensor status is closed
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/99ac5f74-f364-11e9-93cb-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 2:08:21.200 PM EDT<br />
+					<em>1 hour ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="acceleration" class="tooltip-init" >acceleration</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="active" data-toggle="tooltip">
+			
+				active
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor acceleration is active" data-toggle="tooltip">
+			
+				Multipurpose Sensor acceleration is active
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/99a1d882-f364-11e9-93c8-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 2:08:21.131 PM EDT<br />
+					<em>1 hour ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="status" class="tooltip-init" >status</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="open" data-toggle="tooltip">
+			
+				open
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor status is open" data-toggle="tooltip">
+			
+				Multipurpose Sensor status is open
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/d3ca4b37-f362-11e9-938e-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 1:55:39.710 PM EDT<br />
+					<em>2 hours ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="acceleration" class="tooltip-init" >acceleration</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="inactive" data-toggle="tooltip">
+			
+				inactive
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor acceleration is inactive" data-toggle="tooltip">
+			
+				Multipurpose Sensor acceleration is inactive
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/cfc7787b-f362-11e9-9388-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 1:55:32.981 PM EDT<br />
+					<em>2 hours ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="status" class="tooltip-init" >status</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="closed" data-toggle="tooltip">
+			
+				closed
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor status is closed" data-toggle="tooltip">
+			
+				Multipurpose Sensor status is closed
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/cdd0d441-f362-11e9-9384-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 1:55:29.687 PM EDT<br />
+					<em>2 hours ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="acceleration" class="tooltip-init" >acceleration</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="active" data-toggle="tooltip">
+			
+				active
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor acceleration is active" data-toggle="tooltip">
+			
+				Multipurpose Sensor acceleration is active
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/cdb947e4-f362-11e9-9381-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 1:55:29.532 PM EDT<br />
+					<em>2 hours ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="status" class="tooltip-init" >status</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="open" data-toggle="tooltip">
+			
+				open
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor status is open" data-toggle="tooltip">
+			
+				Multipurpose Sensor status is open
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/a3d8114d-f362-11e9-937a-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 1:54:19.270 PM EDT<br />
+					<em>2 hours ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="acceleration" class="tooltip-init" >acceleration</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="inactive" data-toggle="tooltip">
+			
+				inactive
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor acceleration is inactive" data-toggle="tooltip">
+			
+				Multipurpose Sensor acceleration is inactive
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/9e100b52-f362-11e9-9374-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 1:54:09.570 PM EDT<br />
+					<em>2 hours ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="status" class="tooltip-init" >status</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="closed" data-toggle="tooltip">
+			
+				closed
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor status is closed" data-toggle="tooltip">
+			
+				Multipurpose Sensor status is closed
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/9ddf99ca-f362-11e9-9372-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 1:54:09.253 PM EDT<br />
+					<em>2 hours ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="acceleration" class="tooltip-init" >acceleration</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="active" data-toggle="tooltip">
+			
+				active
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor acceleration is active" data-toggle="tooltip">
+			
+				Multipurpose Sensor acceleration is active
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/9b05edfe-f362-11e9-936c-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 1:54:04.471 PM EDT<br />
+					<em>2 hours ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="status" class="tooltip-init" >status</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="open" data-toggle="tooltip">
+			
+				open
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor status is open" data-toggle="tooltip">
+			
+				Multipurpose Sensor status is open
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/a67ce21e-f35b-11e9-930d-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 1:04:17.228 PM EDT<br />
+					<em>2 hours ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="acceleration" class="tooltip-init" >acceleration</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="inactive" data-toggle="tooltip">
+			
+				inactive
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor acceleration is inactive" data-toggle="tooltip">
+			
+				Multipurpose Sensor acceleration is inactive
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/a1a55fa7-f35b-11e9-9305-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 1:04:09.105 PM EDT<br />
+					<em>2 hours ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="status" class="tooltip-init" >status</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="closed" data-toggle="tooltip">
+			
+				closed
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor status is closed" data-toggle="tooltip">
+			
+				Multipurpose Sensor status is closed
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/a07e8524-f35b-11e9-9303-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 1:04:07.173 PM EDT<br />
+					<em>2 hours ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="acceleration" class="tooltip-init" >acceleration</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="active" data-toggle="tooltip">
+			
+				active
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor acceleration is active" data-toggle="tooltip">
+			
+				Multipurpose Sensor acceleration is active
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/9530fbea-f35b-11e9-9300-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 1:03:48.209 PM EDT<br />
+					<em>2 hours ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="acceleration" class="tooltip-init" >acceleration</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="inactive" data-toggle="tooltip">
+			
+				inactive
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor acceleration is inactive" data-toggle="tooltip">
+			
+				Multipurpose Sensor acceleration is inactive
+			
+		</a>
+		</td>
+		
+	</tr>
+
+	<tr class="">
+		<td>
+			<a href="/device/59c867da-d655-4615-8f82-5be8647936f9/event/8f388bd4-f35b-11e9-92fb-d052a8a7fe80?all=&amp;source=&amp;max=50">
+				<span class="eventDate">
+					2019-10-20 1:03:38.193 PM EDT<br />
+					<em>2 hours ago</em>
+				</span>
+			</a>
+		</td>
+		<td>
+			DEVICE
+			
+		</td>
+		<td class="uuid"></td>
+		<td>
+			<a data-toggle="tooltip" title="acceleration" class="tooltip-init" >acceleration</a>
+		</td>
+		<td>
+			<a class="tooltip-init" title="active" data-toggle="tooltip">
+			
+				active
+			
+			</a>
+		</td>
+		<td>
+			
+		</td>
+		<td >
+			<a class="tooltip-init" title="Multipurpose Sensor acceleration is active" data-toggle="tooltip">
+			
+				Multipurpose Sensor acceleration is active
+			
+		</a>
+		</td>
+		
+	</tr>
+
+
+			</tbody>
+		</table>
+		<div id="loadingMoreSpinner" class="spinner center"></div>
+		
+	</div>
+</div>
+
+		</main>
+		<script type="text/javascript">
+			var lastPollDateInMillis;
+			var currPollDateInMillis;
+
+			var enablePolling = false;
+			var loadingMoreEvents = false;
+
+			var defaultNameFilterText = "e.g. contact | activity | !ping | accel*";
+
+			$(document).ready( function() {
+				$('.tooltip-init').tooltip();
+
+				$('*[name=sinceDate]').appendDtpicker({
+					"closeOnSelected": true,
+					"minuteInterval": 15
+				});
+				$('*[name=beforeDate]').appendDtpicker({
+					"closeOnSelected": true,
+					"minuteInterval": 15
+				});
+
+				$('#enableDateFilterLink').click(function(e) {
+					enableDateFilter();
+				});
+				$('#disableDateFilterLink').click(function(e) {
+					disableDateFilter();
+				});
+				$('#enableLivePollingLink').click(function(e) {
+					enableLivePolling();
+				});
+				$('#disableLivePollingLink').click(function(e) {
+					disableLivePolling();
+				});
+
+				$(document).on("click", "#filterBtn", function(){
+					if ($.cookie('enable-date-filter') === 'true') {
+						var since = Date.parse($('#sinceDate:visible').val());
+						var before = Date.parse($('#beforeDate:visible').val());
+						if (since >= before) {
+							$('#dateValidation').show();
+							e.preventDefault();
+						} else {
+							$('#dateValidation').hide();
+							loadEvents();
+						}
+					}
+				});
+				$(document).on("click", "#clearBtn", function(){
+					$('.events-table').empty();
+				});
+				$(document).on("click", "#displayedLink", function(){
+					$.removeCookie('events-filter-all', { path: '/' });
+					$('#all').val("");
+					$.removeCookie('events-filter-source', { path: '/' });
+					$('#source').val("");
+					$.removeCookie('events-filter-eventType', { path: '/' });
+					$('#eventType').val("");
+					loadEvents();
+				});
+				$(document).on("click", "#allLink", function(){
+					$.cookie('events-filter-all', "true", { path: '/' });
+					$('#all').val("true");
+					$.removeCookie('events-filter-source', { path: '/' });
+					$('#source').val("");
+					$.removeCookie('events-filter-eventType', { path: '/' });
+					$('#eventType').val("");
+					loadEvents();
+				});
+				$(document).on("click", "#sourceLink", function(){
+					$.removeCookie('events-filter-all', { path: '/' });
+					$('#all').val("");
+					$.cookie('events-filter-source', "true", { path: '/' });
+					$('#source').val("true");
+					$.removeCookie('events-filter-eventType', { path: '/' });
+					$('#eventType').val("");
+					loadEvents();
+				});
+				$(document).on("click", "a.eventTypeLink", function(){
+					$.removeCookie('events-filter-all', { path: '/' });
+					$('#all').val("");
+					$.cookie('events-filter-source', "true", { path: '/' });
+					$('#source').val("true");
+					var eventType = $(this).html();
+					$.cookie('events-filter-eventType', eventType, { path: '/' });
+					$('#eventType').val(eventType);
+					loadEvents();
+				});
+				$(document).on("change", "#batchSizeSelect", function(){
+					var newBatchSize = $(this).val();
+					$.cookie('events-batch-size', newBatchSize, { path: '/' });
+					$('#max').val(newBatchSize);
+				});
+				$(document).on("focus", "#nameFilter", function(){
+					if ($(this).val() === defaultNameFilterText) {
+						$(this).val("");
+					}
+				});
+				
+			});
+
+			function enableDateFilter() {
+				disableLivePolling();
+				$('#enableDateFilterLink').hide();
+				$('#disableDateFilterLink').show();
+				$('#dateFilter').show();
+				$.cookie('enable-date-filter', 'true', { path: '/' });
+			}
+
+			function disableDateFilter() {
+				disableLivePolling();
+				$('#disableDateFilterLink').hide();
+				$('#enableDateFilterLink').show();
+				$('#dateFilter').hide();
+				$.removeCookie('enable-date-filter', { path: '/' });
+			}
+
+			function enableLivePolling() {
+				disableDateFilter();
+				$('#enableLivePollingLink').hide();
+				$('#disableLivePollingLink').show();
+				$('.event-polling-label').show();
+				$('.batch-size-max').hide();
+				$('.events-table').empty();
+				$('.events-name-filter').show();
+				currPollDateInMillis = new Date().getTime();
+				enablePolling = true;
+			}
+
+			function disableLivePolling() {
+				$('#disableLivePollingLink').hide();
+				$('#enableLivePollingLink').show();
+				$('.event-polling-label').hide();
+				$('.batch-size-max').show();
+				$('.events-name-filter').hide();
+				enablePolling = false;
+			}
+
+			function loadEvents(action) {
+				$.ajax({
+					url: "/event/listAclEvents",
+					data: {
+						all: $('#all').val(),
+						source: $('#source').val(),
+						max: enablePolling ? 0 : $('#max').val(),
+						id: $('#id').val(),
+						type: $('#type').val(),
+						sinceDate: $('#sinceDate:visible').val(),
+						beforeDate: $('#beforeDate:visible').val(),
+						eventType: $('#eventType').val(),
+						nameFilter: $('#nameFilter:visible').val()
+					},
+					beforeSend: function(xhr) {
+						$('#fetchingEventsSpinner').css('display', 'inline-block');
+					},
+					success: function(data) {
+						$('#fetchingEventsSpinner').hide();
+						$('.list-acl').html(data);
+					}
+				});
+			}
+
+			function updatePollingLabel(updatedText) {
+				var eventPollingLabel = $('.event-polling-label');
+
+				eventPollingLabel.fadeOut('slow', function() {
+					$(this).html(updatedText);
+					$(this).fadeIn('slow');
+				});
+				setTimeout(function() {
+					eventPollingLabel.fadeOut('slow', function() {
+						$(this).html("Polling for events...");
+						$(this).fadeIn('slow');
+					});
+				}, 3000);
+			}
+
+			function inView(elem) {
+
+				var $elem = $(elem);
+				var $window = $(window);
+
+				var docViewTop = $window.scrollTop();
+				var docViewBottom = docViewTop + $window.height();
+
+				var elemTop = $elem.offset().top;
+				var elemBottom = elemTop + $elem.height();
+
+				return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+			}
+
+			$(window).scroll(function() {
+				if(enablePolling === false && inView($('div.footer'))) {
+					if (loadingMoreEvents !== true && $('#startAfter').val() !== "") {
+						loadingMoreEvents = true;
+						$.ajax({
+							url: "/event/listMoreEvents",
+							data: {
+								all: $('#all').val(),
+								source: $('#source').val(),
+								max: $('#max').val(),
+								id: $('#id').val(),
+								type: $('#type').val(),
+								sinceDate: $('#sinceDate:visible').val(),
+								beforeDate: $('#beforeDate:visible').val(),
+								eventType: $('#eventType').val(),
+								startAfter: $('#startAfter').val()
+							},
+							beforeSend: function(xhr) {
+								$('#loadingMoreSpinner').css('display', 'table');
+							},
+							success: function(data) {
+								$('#loadingMoreSpinner').hide();
+								$('#startAfter').val(data.startAfter);
+								$('.events-table').append(data.renderedEvents);
+								loadingMoreEvents = false;
+							}
+						});
+					}
+				}
+			});
+
+			(function poll(){
+				setTimeout(function() {
+					if (enablePolling) {
+						lastPollDateInMillis = currPollDateInMillis;
+						currPollDateInMillis = new Date().getTime();
+						var nameFilter = $('#nameFilter:visible').val();
+						nameFilter = nameFilter !== defaultNameFilterText ? nameFilter : "";
+						$.ajax({
+							url: "/event/listMoreEvents",
+							data: {
+								all: $('#all').val(),
+								source: $('#source').val(),
+								max: "200",
+								id: $('#id').val(),
+								type: $('#type').val(),
+								sinceDateInMillis: lastPollDateInMillis.toString(),
+								beforeDateInMillis: currPollDateInMillis.toString(),
+								eventType: $('#eventType').val(),
+								nameFilter: nameFilter
+							},
+							beforeSend: function(xhr) {
+								$('#fetchingEventsSpinner').css('display', 'inline-block');
+							},
+							success: function(data) {
+								$('#fetchingEventsSpinner').hide();
+								$('.events-table').prepend(data.renderedEvents);
+								loadingMoreEvents = false;
+								if (data.fetchedEventSize > 0) {
+									updatePollingLabel("Found " + data.fetchedEventSize + " event(s)");
+								}
+							},
+							error: function(xhr) {
+								enablePolling = false;
+								$('.event-polling-label').html("Polling has stopped...please refresh and re-enable");
+							},
+							dataType: "json",
+							complete: poll
+						});
+					} else {
+						poll();
+					}
+				}, 10000);
+			})();
+		</script>
+	
+<div class="inner-wrap clearfix"></div>
+<div class="footer main" role="contentinfo">
+	<div class="inner-wrap clearfix">
+		<div class="pull-left">
+			&copy; 2019 SmartThings, Inc. All rights reserved.
+		</div>
+		
+		
+			<ul class="pull-right footer-links">
+				<li><a href="http://www.smartthings.com/benefits/" target="_blank">Benefits</a></li>
+				<li>&nbsp;&nbsp;|&nbsp;&nbsp;</li>
+				<li><a href="https://shop.smartthings.com" target="_blank">Shop</a></li>
+				<li>&nbsp;&nbsp;|&nbsp;&nbsp;</li>
+				<li><a href="http://blog.smartthings.com/" target="_blank">Blog</a></li>
+				<li>&nbsp;&nbsp;|&nbsp;&nbsp;</li>
+				<li><a href="https://developers.smartthings.com/" target="_blank">Developers</a></li>
+				<li>&nbsp;&nbsp;|&nbsp;&nbsp;</li>
+				<li><a href="http://support.smartthings.com" target="_blank">Support</a></li>
+				<li>&nbsp;&nbsp;|&nbsp;&nbsp;</li>
+				<li><a href="http://www.smartthings.com/terms/" target="_blank">Terms of Use</a></li>
+				<li>&nbsp;&nbsp;|&nbsp;&nbsp;</li>
+				<li><a href="http://www.smartthings.com/privacy/" target="_blank">Privacy Policy</a></li>
+			</ul>
+		
+	</div>
+</div>
+
+
+</body>
+</html>

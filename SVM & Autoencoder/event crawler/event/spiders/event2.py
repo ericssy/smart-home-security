@@ -10,14 +10,14 @@ class event2(Spider):
     id = 0
 
     def start_requests(self):
-        print os.getcwd()
-        base_url = "file://D:/Desktop/4.html"
+        print(os.getcwd())
+        base_url = "file:///Users/ShenSiyuan/Google%20Drive/Research/Smart%20Home%20Security%20Research/SVM%20&%20Autoencoder/event%20crawler/events_list_motion_sensor.htm"
         yield scrapy.Request(base_url, self.parse)
 
     def parse(self, response):
         # outputs title and content of an article
         posts = response.xpath("//tbody[@class='events-table']//tr")
-        print len(posts)
+        print(len(posts))
         for p in posts:
             item = items.EventItem()
             date = p.xpath(".//span[@class='eventDate']/text()").extract_first()
@@ -33,7 +33,7 @@ def main(events, context):
     process = CrawlerProcess({
         'USER_AGENT': 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)',
         'FEED_FORMAT': 'txt',
-        'FEED_URI': 'D:/tmp/id.txt'
+        #'FEED_URI': 'tmp/id.txt'
     })
 
     process.crawl(event2)

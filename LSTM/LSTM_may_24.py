@@ -284,9 +284,9 @@ def visualize_input(norm, abnormal):
 split the normal data into training and validation sets, 
 and the abnormal data as testing set
 '''
-X_norm, Y_norm = pre_processing2("normal_data.csv", 20)
+X_norm, Y_norm = pre_processing2("normal_chiraag.csv", 20)
 # validation set 
-X_abnormal, Y_abnormal = pre_processing2("simulated_data.csv", 20)
+X_abnormal, Y_abnormal = pre_processing2("abnormal_data.csv", 20)
 ### train validation split
 X_train, X_vali, y_train, y_vali = train_test_split(X_norm, Y_norm, test_size=0.2, random_state=0)
 
