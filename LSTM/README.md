@@ -1,4 +1,67 @@
-##  Added two simulated abnormal datasets
+## Sensor fusion 
+
+Malicious attacker device is able to send data that misleads the SmartHome sensors. Here in our experiment, we simulated temperature features and combine them with features from SmartHome sensor to confuse the detection. The attacker device has no access to the environment inside the room in which the sensors are located. Thus, the readings from the attacker device are not synchronized with the readings from the SmartHome sensors. We have multiple sensors that records the temperatures in the room. Due to differenes in the type, timing and location of the sensors, the readings are not exactly the same. However, most part of the temperature features from the SmartHome sensors are in some ways synchronized. Here, we try to detect the features coming from an attacker device by utilizing this property. 
+
+The detection is made possible by measuring the cross validation on two time series data. We shifted one of the time series incrementally so that there is a lag between the two time series, and then measure the cross correlation. We picked the lag with the highest correlation. With that, we can know if the two time series are synchronized. A threshold on the offset is picked such that when the offset is greater than the threshold, the time series is considered as from a malicious device. 
+
+
+
+
+
+## LSTM model
+
+### 1.Feature Transformation
+
+The `normal_data.csv` and `abnormal_data.csv` are transformed from the raw data collected by the sensors and  the simulated raw data respectively. `normal_data.csv` and `abnormal_data.csv` contains the status of temperature, door status, accleration and motion at each timestamp. The interval of each timestamp is not fixed because the sensor only updates the dataset once it detects a change.  
+
+The two datasets, `normal_data.csv` and `abnormal_data.csv`  are transformed from `(sample_size * num_of_features)` to `(sample_size * num_of_steps * num_of_features)`. `num_of_steps` is the number of timestamps we trace back (from time $t_{i-20}$ to $t_i​$) in one sample. The number of steps in our experiment is 20 and the num of features is 5. Each sample in the transformed data is a 20 * 5 vector. 
+
+The model is trained with the normal_data alone, with 80% of the samples as training data and 20% for validation. The trained model is trained to minimize the MSE with the adam optimizer. The validation data is used to determine a threshold on MSE. The threshold allows us to control the false positive rate. The final model predicted if an event is normal or abnormal based on the MSE threshold. If an event is abnormal, the event would most likely to deviate from the predicted output by the LSTM model, and thus would be considered as abnormal.
+
+The abnormality detection rate is measured on a dataset with abormal data only. The overall accuracy is measured on a dataset with abnormal data inserted into normal behavior data to simulate real-life scenarios.
+
+
+
+## Data with abnormal data inserted into normal data for overall accuracy
+
+LSTM
+
+testing with abnormal and normal data seperately:
+
+- Overall accuracy: 91.0%
+- abnormality accuracy: 83.1%
+- false positive: 5.0%
+
+
+
+LSTM autoencoder
+
+- testing with abnormal and normal data seperately:
+  - Overall Accuracy: 96.7% 
+  - abnormality accuracy: 100%
+  - false positive: 5.0%
+
+* testing data with normal and abnormal behaviors
+  * overall accuracy: 85.7%
+  * abnormality accuracy: 47.7%
+  * false positive rate: 14.3%
+
+
+
+
+
+## Event Crawler
+
+The normal event data is crawled with a script built with the Scrapy Framework. The html file of the event list is downloaded to the folder. The `base_url` variable in `event_2.py` is modified to the path of the downloaded file. After the configuration, go to the folder where you store the event_2.py file and run the command `scrapy crawl event -o [filename]` to crawl the event page and save the data as a csv file. 
+
+Create a virtual env : python3 -m venv env
+Activate your env : source env/bin/activate
+Install Scrapy with pip : pip install scrapy
+Start your crawler : ​sudo scrapy crawl event -o result.csv
+
+
+
+##  Two newly simulated abnormal datasets
 
 ### 1. simulated_data.csv
 

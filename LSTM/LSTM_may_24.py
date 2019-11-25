@@ -23,6 +23,7 @@ from sklearn.preprocessing import MinMaxScaler
 from keras.layers import TimeDistributed, RepeatVector
 import random
 import seaborn as sns
+import keras.utils
 
 def import_csv(filename):
     data = pd.read_csv(filename)
@@ -42,9 +43,32 @@ def import_csv(filename):
 
 #data_norm = import_csv("normal_data.csv")
 #data_abnormal = import_csv("abnormal_data.csv")
+def pre_processing(filename, timestep = 20):
+    data = pd.read_csv(filename)
+    data['Motion'] = data['Motion'].map({'inactive': 0, 'active': 1})
+    data['Acceleration'] = data['Acceleration'].map({'inactive': 0, 'active': 1})
+    data['DayOfWeek'] = data['DayOfWeek'] / 6.0
+    time_transformed = []
+    for i in range(data.shape[0]):
+        timestamp = data["Time"][i]
+        time = timestamp.split(':')
+        h = (int)(time[0]) * 60 * 60
+        m = (int)(time[1]) * 60
+        s = (float)(time[2])
+        time = (h + m + s)/ 86400
+        time_transformed.append(time)
+        
+    data["time_transformed"] = time_transformed
+    data = data.drop(["Time"], axis = 1)
+    data["Temperature"] = (data["Temperature"] - data["Temperature"].min()) / (data["Temperature"].max() - data["Temperature"].min())
+    data_sorted = data.sort_values(by=['DayOfWeek', 'time_transformed'])
+    data_sorted = data_sorted.reset_index(drop=True)
+    data_input = np.asarray(data_sorted)
+    X = []
+    Y_labels = []
+    return X, Y_labels
 
-
-def pre_processing2(filename, timestep = 10):
+def pre_processing2(filename, timestep = 20, normal = True):
     data = pd.read_csv(filename)
     data['Motion'] = data['Motion'].map({'inactive': 0, 'active': 1})
     data['Acceleration'] = data['Acceleration'].map({'inactive': 0, 'active': 1})
@@ -73,95 +97,15 @@ def pre_processing2(filename, timestep = 10):
         for j in range(timestep):
             temp.append(data_input[i-j])
         X.append(temp)
-        Y_labels.append(data_input[i+1])
+        if (normal == True):
+            Y_labels.append(0)
+        else:
+            Y_labels.append(1)
     X = np.asarray(X)
     Y_labels = np.asarray(Y_labels)
     return X, Y_labels
     
 # transform the features 
-def pre_processing(filename, timestep = 10):
-    data = pd.read_csv(filename)
-    
-    data_sorted = data.sort_values(by=['DayOfWeek', 'Time'])
-    data_sorted = data_sorted.reset_index(drop=True)
-    window_size = 100
-    times_transformed = []
-    motion_count_list = [] # count how long the motion status is active
-    acc_count_list = []
-    temp_count_list = []
-    temp_avg_list = []
-    
-    Motion = data_sorted["Motion"]
-    Time = data_sorted["Time"]
-    Acceleration = data_sorted["Acceleration"]
-    Temp = data_sorted["Temperature"]
-    
-    for i in range(window_size-1, data_sorted.shape[0]):
-        #time index 
-        timestamp = Time[i]
-        time = timestamp.split(':')
-        h = (int)(time[0]) * 60 * 60
-        m = (int)(time[1]) * 60
-        s = (float)(time[2])
-        time = h + m + s
-        times_transformed.append((int)(time / 1800))
-       
-        #motion count 
-        motion_count = 0
-        for j in range(0, window_size):
-            motion = Motion[i-j]
-            if (motion == "active"):
-                motion_count = motion_count + 1
-        motion_count_list.append(motion_count)
-                
-        #acceleration count
-        acc_count = 0
-        for j in range(0, window_size):
-            acc = Acceleration[i-j]
-            if (acc == 'active'):
-                acc_count = acc_count + 1
-        acc_count_list.append(acc_count)
-        
-        #temperature change count
-        temp_count = 0
-        for j in range(0, window_size-1):
-            if (Temp[i-j] != Temp[i-j-1]):
-                temp_count = temp_count + 1
-        temp_count_list.append(temp_count)
-            
-        #average temperature
-        temp_sum = 0
-        for j in range(0, window_size):
-            temp_sum = temp_sum + Temp[i-j]
-        temp_avg_list.append(temp_sum / window_size)
-            
-    data_input = np.array([times_transformed, motion_count_list,
-                                 acc_count_list, temp_count_list, temp_avg_list])
-    data_input =  data_input.transpose()
-    
-    #standardize the data with StandardScaler
-    # using MinMax Scaler will cause the loss to be nan 
-    scaler = StandardScaler()
-    data_input = scaler.fit_transform(data_input)
-    
-    
-    #Convert the input to the format required by LSTM
-    X = []
-    Y_labels = []
-    
-    
-    for i in range(timestep - 1, data_input.shape[0] - 1 ):
-        temp = []
-        for j in range(timestep):
-            temp.append(data_input[i-j])
-        X.append(temp)
-        Y_labels.append(data_input[i+1])
-
-    X = np.asarray(X)
-    Y_labels = np.asarray(Y_labels)
-    # Y_labels = np.reshape(Y_labels, (Y_labels.shape[0], 1, 5))
-
-    return X, Y_labels
 
 
 def train_predict(X, Y_labels):
@@ -205,20 +149,6 @@ Y = Y_norm + Y_abnormal
 '''
 
 
-#### deal with imlanance of classes
-def overSampling(X_norm, X_abnormal):
-    size_norm = X_norm.shape[0]
-    size_abnormal = X_abnormal.shape[0]
-    size_abnormal_original = size_abnormal
-    while (size_abnormal <= size_norm):
-        rand_number = random.randint(0, size_abnormal_original)
-        sample_temp = X_abnormal[rand_number]
-        sample_temp =  np.reshape(sample_temp, (1,20,5))
-        X_abnormal = np.append(X_abnormal, sample_temp, axis = 0)
-        size_abnormal = size_abnormal + 1
-    Y_norm = [1] * X_norm.shape[0]
-    Y_abnormal = [0] * X_abnormal.shape[0]
-    return X_norm, X_abnormal, Y_norm, Y_abnormal
 
 def visualize_mse(MSEs_normal, MSEs_abnormal):
     #one distribution and one scatter plot
@@ -284,7 +214,7 @@ def visualize_input(norm, abnormal):
 split the normal data into training and validation sets, 
 and the abnormal data as testing set
 '''
-X_norm, Y_norm = pre_processing2("normal_chiraag.csv", 20)
+X_norm, Y_norm = pre_processing2("normal_data.csv", 20)
 # validation set 
 X_abnormal, Y_abnormal = pre_processing2("abnormal_data.csv", 20)
 ### train validation split
@@ -293,16 +223,19 @@ X_train, X_vali, y_train, y_vali = train_test_split(X_norm, Y_norm, test_size=0.
 visualize_input(Y_norm, Y_abnormal)
 
 model = Sequential()
-model.add(LSTM(128, activation='relu', return_sequences=True, input_shape=(20,5)))
-model.add(LSTM(128, activation='relu', return_sequences=True))
-model.add(LSTM(64, activation='relu'))
-model.add(Dense(5))
+model.add(LSTM(64, activation='relu', return_sequences=True, input_shape=(20,5)))
+model.add(LSTM(32, activation='relu'))
+model.add(RepeatVector(20))
+model.add(LSTM(32, activation='relu', return_sequences = True))
+model.add(LSTM(64, activation='relu', return_sequences = True))
+model.add(TimeDistributed(Dense(5)))
 
 print(model.summary())
 model.compile(loss='mse', optimizer='adam')
-history = model.fit(X_train, y_train, epochs=10, validation_data=(X_vali, y_vali), batch_size=32, verbose=1, shuffle=True)
+history = model.fit(X_train, X_train, epochs=10, validation_data=(X_vali, X_vali), batch_size=32, verbose=1, shuffle=True)
 history
-y_vali_pred = model.predict(X_vali, verbose=0)
+X_vali_pred = model.predict(X_vali, verbose=0)
+
 
 '''
 _________________________________________________________________
@@ -331,37 +264,57 @@ plt.plot(history.history['val_loss'], linewidth=2, label='Validation')
 plt.legend(loc='upper right')
 plt.show()
 
+def flatten(X):
+    '''
+    Flatten a 3D array.
+    
+    Input
+    X            A 3D array for lstm, where the array is sample x timesteps x features.
+    
+    Output
+    flattened_X  A 2D array, sample x features.
+    '''
+    flattened_X = np.empty((X.shape[0], X.shape[2]))  # sample x features array.
+    for i in range(X.shape[0]):
+        flattened_X[i] = X[i, (X.shape[1]-1), :]
+    return(flattened_X)
 
 #### using mean square error to set a threshold for testing
 #### the percentile is set to  here 
 mse_list = []
-for i in range(len(y_vali_pred)):
-  mse_list.append(np.mean(np.square(np.subtract(y_vali_pred[i], y_vali[i]))))
-threshold = np.percentile(mse_list, 93)
+for i in range(len(X_vali_pred)):
+    mse = np.mean(np.square(np.subtract(X_vali_pred[19], X_vali[19])))
+    mse_list.append(mse)
+    #mse_list.append(np.mean(np.square(np.subtract(y_vali_pred[i], y_vali[i]))))
+threshold = np.percentile(mse_list, 95)
 print("mse threshold is: ", threshold)
 
-X_abnormal, y_abnormal = pre_processing("abnormal_data.csv", 20)
 
 
 t = 0
 abnormal_mse = []
-y_abnormal_pred = model.predict(X_abnormal)
+X_abnormal_pred = model.predict(X_abnormal)
 pred_binary = []
-for i in range(len(y_abnormal)):
-  mse = np.mean(np.square(np.subtract(y_abnormal_pred[i], y_abnormal[i])))
+for i in range(len(X_abnormal)):
+  mse = np.mean(np.square(np.subtract(X_abnormal_pred[19], X_abnormal[19])))
   if mse < threshold:
+    
+    pred_binary.append(0)
+  else:
     t = t + 1
     pred_binary.append(1)
-  else:
-    pred_binary.append(0)
   abnormal_mse.append(mse)
       
-print("number of samples predicted to be normal in abnormal data: ", t)
-print("number of abnormal data: ", len(y_abnormal))
-print("abnormality accuracy():", (len(y_abnormal) - t)/ len(y_abnormal))
+print("number of samples predicted to be normal in abnormal data: ",len(X_abnormal)- t)
+print("number of abnormal data: ", len(X_abnormal))
+print("abnormality accuracy():",  t/ len(X_abnormal))
 
 visualize_mse(mse_list, abnormal_mse)
 
+(len(X_vali_pred) * 0.95 + t) / (len(X_vali_pred) + len(X_abnormal_pred))
+
+
+(len(X_vali_pred) * 0.95 + len(X_abnormal_pred) * 0.83) / (len(X_vali_pred) + len(X_abnormal_pred))
 
 '''
 Suppose positive = abnormal   negative = normal 
@@ -388,8 +341,8 @@ number of samples predicted to be normal in abnormal data:  571
 number of abnormal data:  9881
 abnormality accuracy(): 0.9422123266875823
 
-
 '''
+
 
 
 
@@ -409,7 +362,7 @@ for i in range(0, 100, 1):
   true_positive_rate.append((len(y_abnormal) - t) / len(y_abnormal))
   false_positive_rate.append((100- i)/100)
   thresholds.append(threshold)
-  
+
 
 
 print("true positive rate: \n", true_positive_rate)
@@ -422,4 +375,56 @@ plt.ylabel("true_positive_rate")
 plt.title("ROC curve")
 plt.show()
     
+
+
+##### prediction with a mixture of normal and abnormal data 
+
+from scipy.stats import truncnorm
+
+def get_truncated_normal(mean=0, sd=1, low=0, upp=10):
+    return truncnorm(
+        (low - mean) / sd, (upp - mean) / sd, loc=mean, scale=sd)
+
+
+
+
+
+##### generate testing data by inserting abnormal data into normal behavior
+##### data
+
+# 
+
+index = 0 
+final_dayofweek = data_norm.iloc[-1]["DayOfWeek"]
+final_time_transformed = data_norm.iloc[-1]["time_transformed"]
+data_mixed = data_norm
+labels= [1] * data_mixed.shape[0]
+data_mixed["label"] = labels
+data_abnormal_with_labels = data_abnormal
+labels= [0] * data_abnormal.shape[0]
+data_abnormal_with_labels["label"] = labels
+data_norm_shape = data_norm.shape[0]
+data_append = pd.DataFrame(columns = data_mixed.columns)
+while (index < data_mixed.shape[0]):
+    X = get_truncated_normal(mean = 30, sd = 20, low = 5, upp = 130)
+    rand_int = int(X.rvs())
+    if (index + rand_int < data_mixed.shape[0]):
+        dayofweek = data_mixed.iloc[index]["DayOfWeek"]
+        time_transformed = data_mixed.iloc[index]["time_transformed"]
+        dayofweek2 = data_mixed.iloc[index+rand_int]["DayOfWeek"]
+        time_transformed2 = data_mixed.iloc[index+rand_int]["time_transformed"]
+        data_mixed = data_mixed.drop(data_mixed.index[index: index+rand_int])
+        abnormal = data_abnormal_with_labels[(data_abnormal_with_labels["DayOfWeek"] == dayofweek) & (data_abnormal_with_labels["time_transformed"] > time_transformed) & (data_abnormal_with_labels["time_transformed"]< time_transformed2)]
+        data_append = data_append.append(abnormal)
+        index = index + rand_int
+    else:
+        break
+        
+
+
+    
+    
+    
+    
+
 

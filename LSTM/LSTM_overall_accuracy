@@ -1,0 +1,350 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Nov 14 16:06:08 2019
+
+@author: ShenSiyuan
+"""
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import sklearn as sk
+from sklearn import preprocessing
+import itertools 
+from sklearn.preprocessing import StandardScaler
+from sklearn.compose import ColumnTransformer
+from keras.models import Sequential
+from keras.layers import Dense
+from keras.layers import LSTM
+from sklearn.model_selection import train_test_split
+from sklearn import datasets
+from keras.layers import Activation, Dense
+from sklearn.preprocessing import MinMaxScaler
+from keras.layers import TimeDistributed, RepeatVector
+import random
+import seaborn as sns
+from sklearn.metrics import classification_report
+
+def import_csv(filename):
+    data = pd.read_csv(filename)
+    time_transformed = []
+    for i in range(data.shape[0]):
+        timestamp = data["Time"][i]
+        time = timestamp.split(':')
+        h = (int)(time[0]) * 60 * 60
+        m = (int)(time[1]) * 60
+        s = (float)(time[2])
+        time = (h + m + s)
+        time_transformed.append(time)
+    data["time_transformed"] = time_transformed
+    data_sorted = data.sort_values(by=['DayOfWeek', 'time_transformed'])
+    data_sorted = data_sorted.reset_index(drop=True)
+    return data_sorted
+
+
+def insert_abnormal_into_normal(data_norm, data_abnormal):
+    index = 0 
+
+    data_mixed = data_norm
+    labels= [0] * data_mixed.shape[0]
+    data_mixed["label"] = labels
+    data_abnormal_with_labels = data_abnormal
+    labels= [1] * data_abnormal.shape[0]
+    data_abnormal_with_labels["label"] = labels
+    data_norm_shape = data_norm.shape[0]
+    data_append = pd.DataFrame(columns = data_mixed.columns)
+    while (index < data_mixed.shape[0]):
+        X = get_truncated_normal(mean = 30, sd = 20, low = 5, upp = 130)
+        rand_int = int(X.rvs())
+        if (index + rand_int < data_mixed.shape[0]):
+            dayofweek = data_mixed.iloc[index]["DayOfWeek"]
+            time_transformed = data_mixed.iloc[index]["time_transformed"]
+            dayofweek2 = data_mixed.iloc[index+rand_int]["DayOfWeek"]
+            time_transformed2 = data_mixed.iloc[index+rand_int]["time_transformed"]
+            data_mixed = data_mixed.drop(data_mixed.index[index: index+rand_int])
+            abnormal = data_abnormal_with_labels[(data_abnormal_with_labels["DayOfWeek"] == dayofweek) & (data_abnormal_with_labels["time_transformed"] > time_transformed) & (data_abnormal_with_labels["time_transformed"]< time_transformed2)]
+            data_append = data_append.append(abnormal)
+            index = index + rand_int
+        else:
+            break
+    data_mixed = data_mixed.append(data_append)
+    data_mixed = data_mixed.sort_values(by=['DayOfWeek', 'time_transformed'])
+    data_abnormal2 = data_abnormal_with_labels[~data_abnormal_with_labels.isin(data_append)].dropna(how = 'all')
+    return data_mixed, data_abnormal2
+
+
+def pre_processing(data, timestep = 20):
+    #data = pd.read_csv(filename)
+    data['Motion'] = data['Motion'].map({'inactive': 0, 'active': 1})
+    data['Acceleration'] = data['Acceleration'].map({'inactive': 0, 'active': 1})
+    data['DayOfWeek'] = data['DayOfWeek'] / 6.0
+    time_transformed = []
+    for i in range(data.shape[0]):
+        timestamp = data["Time"][i]
+        time = timestamp.split(':')
+        h = (int)(time[0]) * 60 * 60
+        m = (int)(time[1]) * 60
+        s = (float)(time[2])
+        time = (h + m + s)/ 86400
+        time_transformed.append(time)
+    data["time_transformed"] = time_transformed
+    data = data.drop(["Time"], axis = 1)
+    data["Temperature"] = (data["Temperature"] - data["Temperature"].min()) / (data["Temperature"].max() - data["Temperature"].min())
+    data_sorted = data.sort_values(by=['DayOfWeek', 'time_transformed'])
+    data_sorted = data_sorted.reset_index(drop=True)
+    data_input = np.asarray(data_sorted)
+    X = []
+    Y_values = []
+    #Y_labels = []
+    
+    for i in range(timestep - 1, data_input.shape[0] - 1 ):
+        temp = []
+        for j in range(timestep):
+            temp.append(data_input[i-j])
+        X.append(temp)
+        Y_values.append(data_input[i+1])
+        #Y_labels.append(data_sorted.iloc[i+1]["label"])
+    X = np.asarray(X)
+    Y_values = np.asarray(Y_values)
+    return X, Y_values
+
+
+def pre_processing_testing(dataset, timestep = 20):
+    data = dataset
+    #data = pd.read_csv(filename)
+    data['Motion'] = data['Motion'].map({'inactive': 0, 'active': 1})
+    data['Acceleration'] = data['Acceleration'].map({'inactive': 0, 'active': 1})
+    data['DayOfWeek'] = data['DayOfWeek'] / 6.0
+    
+    data = data.drop(["Time"], axis = 1)
+    data["Temperature"] = (data["Temperature"] - data["Temperature"].min()) / (data["Temperature"].max() - data["Temperature"].min())
+    data_sorted = data.sort_values(by=['DayOfWeek', 'time_transformed'])
+    data_sorted = data_sorted.reset_index(drop=True)
+    labels = data_sorted["label"]
+    data_sorted = data_sorted.drop(["label"], axis = 1)
+    data_sorted = data_sorted.drop(["Unnamed: 0"], axis = 1)
+    data_sorted["time_transformed"] = data_sorted["time_transformed"] /86400
+    data_input = np.asarray(data_sorted)
+    X = []
+    Y_values = []
+    Y_labels = []
+    
+    for i in range(timestep - 1, data_input.shape[0] - 1 ):
+        temp = []
+        for j in range(timestep):
+            temp.append(data_input[i-j])
+        X.append(temp)
+        Y_values.append(data_input[i+1])
+        Y_labels.append(labels[i+1])
+    X = np.asarray(X)
+    Y_values = np.asarray(Y_values)
+    return X, Y_labels
+
+
+def train_LSTM(X_norm, Y_norm):
+    X_train, X_vali, y_train, y_vali = train_test_split(X_norm, Y_norm, test_size=0.1, random_state=0)
+    model = Sequential()
+    model.add(LSTM(128, activation='relu', return_sequences=True, input_shape=(20,5)))
+    model.add(LSTM(128, activation='relu', return_sequences=True))
+    model.add(LSTM(64, activation='relu'))
+    model.add(Dense(5))
+    print(model.summary())
+    model.compile(loss='mse', optimizer='adam')
+    history = model.fit(X_train, y_train, epochs=10, validation_data=(X_vali, y_vali), batch_size=32, verbose=1, shuffle=True)
+    y_vali_pred = model.predict(X_vali, verbose=0)
+    mse_list = []
+    for i in range(len(y_vali_pred)):
+      mse_list.append(np.mean(np.square(np.subtract(y_vali_pred[i], y_vali[i]))))
+    threshold = np.percentile(mse_list, 95)
+    return model, threshold
+        
+
+def train_LSTM2(X_norm, Y_norm):
+    X_train, X_vali, y_train, y_vali = train_test_split(X_norm, Y_norm, test_size=0.1, random_state=0)
+    model = Sequential()
+    model.add(LSTM(64, activation='relu', return_sequences=True, input_shape=(20,5)))
+    model.add(LSTM(32, activation='relu'))
+    model.add(RepeatVector(20))
+    model.add(LSTM(32, activation='relu', return_sequences = True))
+    model.add(LSTM(64, activation='relu', return_sequences = True))
+    model.add(TimeDistributed(Dense(5)))
+    print(model.summary())
+    model.compile(loss='mse', optimizer='adam')
+    history = model.fit(X_train, X_train, epochs=10, validation_data=(X_vali, X_vali), batch_size=32, verbose=1, shuffle=True)
+    X_vali_pred = model.predict(X_vali, verbose=0)
+    mse_list = []
+    for i in range(len(X_vali_pred)):
+        mse = np.mean(np.square(np.subtract(X_vali_pred[i], X_vali[i])))
+        mse_list.append(mse)
+    threshold = np.percentile(mse_list, 95)
+    return model, threshold
+
+def plot_confusion_matrix(y_true, y_pred, classes,
+                          normalize=False,
+                          title=None,
+                          cmap=plt.cm.Blues):
+    """
+    This function prints and plots the confusion matrix.
+    Normalization can be applied by setting `normalize=True`.
+    """
+    from sklearn.metrics import confusion_matrix
+    if not title:
+        if normalize:
+            title = 'Normalized confusion matrix'
+        else:
+            title = 'Confusion matrix, without normalization'
+
+    # Compute confusion matrix
+    cm = confusion_matrix(y_true, y_pred)
+    # Only use the labels that appear in the data
+    classes = classes[unique_labels(y_true, y_pred)]
+    if normalize:
+        cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
+        print("Normalized confusion matrix")
+    else:
+        print('Confusion matrix, without normalization')
+
+    print(cm)
+
+    fig, ax = plt.subplots()
+    im = ax.imshow(cm, interpolation='nearest', cmap=cmap)
+    ax.figure.colorbar(im, ax=ax)
+    # We want to show all ticks...
+    ax.set(xticks=np.arange(cm.shape[1]),
+           yticks=np.arange(cm.shape[0]),
+           # ... and label them with the respective list entries
+           xticklabels=classes, yticklabels=classes,
+           title=title,
+           ylabel='True label',
+           xlabel='Predicted label')
+
+    # Rotate the tick labels and set their alignment.
+    plt.setp(ax.get_xticklabels(), rotation=45, ha="right",
+             rotation_mode="anchor")
+
+    # Loop over data dimensions and create text annotations.
+    fmt = '.2f' if normalize else 'd'
+    thresh = cm.max() / 2.
+    for i in range(cm.shape[0]):
+        for j in range(cm.shape[1]):
+            ax.text(j, i, format(cm[i, j], fmt),
+                    ha="center", va="center",
+                    color="white" if cm[i, j] > thresh else "black")
+    fig.tight_layout()
+    return ax
+
+
+
+data_norm = import_csv("normal_data.csv")
+data_abnormal = import_csv("abnormal_data.csv")
+
+data_norm_2 = data_norm.iloc[:int(data_norm.shape[0] * 0.5)]
+data_norm_testing = data_norm.iloc[int(data_norm.shape[0] * 0.5):]
+
+
+data_mixed, data_abnormal2 = insert_abnormal_into_normal(data_norm_testing, data_abnormal)
+data_mixed.to_csv("data_mixed.csv")
+data_abnormal2.to_csv("data_abnormal_testing.csv")
+
+data_mixed = pd.read_csv("data_mixed.csv")
+
+X_norm, Y_norm, Y_norm_label = pre_processing(data_norm_2, 20)
+X_abnormal, Y_abnormal_label = pre_processing(data_abnormal2, 20)
+
+model, threshold = train_LSTM(X_norm, Y_norm)
+
+X_test, Y_test_labels = pre_processing_testing(data_mixed,20)
+X_test[0]
+
+X_test_pred = model.predict(X_test, verbose=0)
+Y_test_labels_pred = [] 
+for i in range(len(X_test_pred)):
+    mse = np.mean(np.square(np.subtract(X_test_pred[i], X_test[i])))
+    if mse < threshold:
+        Y_test_labels_pred.append(0)
+    else:
+        Y_test_labels_pred.append(1)
+        
+count = 0
+for i in range(len(Y_test_labels_pred)):
+    if (Y_test_labels_pred[i] == Y_test_labels[i]):
+        count = count + 1
+print(count/len(Y_test_labels_pred))
+    
+
+
+def confusion_matrix():
+    cm = pd.crosstab(index=Y_test_labels, columns=Y_test_labels_pred)
+    tn = cm.iloc[0,0]; fn = cm.iloc[1,0]; tp = cm.iloc[1,1]; fp = cm.iloc[0,1]; p = (tp+tn)/(tp+tn+fp+fn)*100
+    print("\n{0:<20}{1:<4.1f}%\n".format("Overall Classification Rate: ", p))
+    print("{0:<15}{1:<15}{2:>8}".format("Predicted", "No Purchase", "Purchase"))
+    print("Observed")
+    print("{0:<15}{1:<2.0f}% ({2:<}){3:>6.0f}% ({4:<})".format("No Purchase", tn/(tn+fn)*100,tn, fp/(tp+fp)*100, fp))
+    print("{0:<16}{1:<1.0f}% ({2:<}){3:>7.0f}% ({4:<}) \n".format("Purchase", fn/(tn+fn)*100,fn, tp/(tp+fp)*100, tp))
+    
+print(classification_report(Y_test_labels, Y_test_labels_pred, labels=[0, 1], target_names = ["normal", "abnormal"]))
+
+def normal_accuracy():
+    count = 0
+    count_norm = 0
+    for i in range(len(Y_test_labels_pred)):
+        if (Y_test_labels_pred[i] == 0 and  Y_test_labels[i] == 0):
+            count = count + 1
+        if (Y_test_labels[i] == 0):
+            count_norm = count_norm + 1
+    print(count/count_norm)
+normal_accuracy()
+
+
+def abnormal_accuracy():
+    count = 0
+    count_abnorm = 0
+    for i in range(len(Y_test_labels_pred)):
+        if (Y_test_labels_pred[i] == 1 and  Y_test_labels[i] == 1):
+            count = count + 1
+        if (Y_test_labels[i] == 1):
+            count_abnorm = count_abnorm + 1
+    print(count/count_abnorm)
+abnormal_accuracy()
+
+def false_positive():
+    count = 0
+    count_base = 0
+    for i in range(len(Y_test_labels_pred)):
+        if (Y_test_labels_pred[i] == 1 and  Y_test_labels[i] == 0):
+            count = count + 1
+        if (Y_test_labels[i] == 0):
+            count_base = count_base + 1
+    print(count/count_base)
+    
+false_positive()
+
+'''
+0.8381013810896949
+0.655220822583093
+
+              precision    recall  f1-score   support
+
+      normal       0.97      0.86      0.91     24997
+    abnormal       0.15      0.48      0.23      1359
+
+   micro avg       0.84      0.84      0.84     26356
+   macro avg       0.56      0.67      0.57     26356
+weighted avg       0.93      0.84      0.87     26356
+
+'''
+
+
+
+result = pd.DataFrame()
+result["Y_labels"] = Y_test_labels 
+result["Y_labels Pred"] = Y_test_labels_pred
+
+
+
+
+
+
+
